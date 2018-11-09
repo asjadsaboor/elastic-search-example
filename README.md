@@ -1,4 +1,5 @@
 # Elastic Search Example
+
 Example of elastic search integration. Based on Node.js + Koa and Angular 5 on Front-End.
 
 - [Installation](#installation)
@@ -6,13 +7,14 @@ Example of elastic search integration. Based on Node.js + Koa and Angular 5 on F
 - [Usage](#usage)
 
 ## Installation
+
 - Install PostgreSQL and Elastic Search (no additional configuration is required);
 - Run in both **client** and **server** folders:
-  ``` bash
+  ```bash
   npm install
   ```
 - In **server** folder run in the following order:
-  ``` bash
+  ```bash
   node database/scripts/initDb.js
   node database/scripts/initTables.js
   node database/scripts/setData.js
@@ -20,16 +22,18 @@ Example of elastic search integration. Based on Node.js + Koa and Angular 5 on F
   Don't forget that you can customize those scripts for your own needs (setData especially, probably you want to decrease number of entries).
 
 ## Start
+
 - Run in **client** folder:
-  ``` bash
+  ```bash
   npm run bundle
   ```
 - Run in **server** folder:
-  ``` bash
+  ```bash
   NODE_ENV=production node index.js
   ```
 
 ## Usage
- - Visit *http://localhost:8001*;
- 
- We are looking forward to meeting you on our website *https://soshace.com*
+
+- Visit _http://localhost:3000_;
+
+We are looking forward to meeting you on our website _https://soshace.com_

@@ -1,0 +1,73 @@
+version: "3.7"
+
+services:
+  client:
+    build: client
+    depends_on:
+      - server
+      - postgres
+      - elastic-search
+    ports:
+      - 4200:4200
+
+  server:
+    build: server
+    depends_on:
+      - postgres
+      - elastic-search
+    volumes:
+      - "./server:/usr/src/app"
+    ports:
+      - 3000:3000
+
+  postgres:
+    image: mdillon/postgis:10-alpine
+    container_name: database
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - "postgres_elastic:/var/lib/postgresql/data"
+    ports:
+      - 5432:5432
+
+  elastic-search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+    container_name: elastic-search
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - "es-data:/usr/share/elasticsearch/data"
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.3.0
+    container_name: kibana
+    depends_on:
+      - elastic-search
+    environment:
+      SERVER_NAME: localhost
+      ELASTICSEARCH_URL: http://elastic-search:9200
+    ports:
+      - 5601:5601
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+volumes:
+  postgres_elastic: ~
+  es-data: ~

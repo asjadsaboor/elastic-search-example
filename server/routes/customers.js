@@ -6,7 +6,11 @@ const BASE_URL = '/api/customers';
 
 router.get(BASE_URL, async (ctx) => {
     try {
-        const {page, limit, ...search} = ctx.request.query;
+        const {
+            page,
+            limit,
+            ...search
+        } = ctx.request.query;
         const customers = await customerQueries.all(page, limit, search);
         const customersCount = await customerQueries.count(search);
 
@@ -15,7 +19,17 @@ router.get(BASE_URL, async (ctx) => {
 
         ctx.body = customers
             .map(customer => customer.dataValues)
-    } catch(err) {
+    } catch (err) {
+        console.log(err);
+        ctx.status = 400;
+    }
+});
+
+router.get('/api/ping', async (ctx) => {
+    try {
+        console.log('inside ping');
+        ctx.body = 'ping pong'
+    } catch (err) {
         console.log(err);
         ctx.status = 400;
     }

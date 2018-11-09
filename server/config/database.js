@@ -1,7 +1,7 @@
 module.exports = {
     database: {
-        connectionString: 'postgres://localhost:5432',
-        dbName: 'test_es_db',
+        connectionString: 'postgres://postgres:postgres@postgres:5432',
+        dbName: 'postgres',
         options: {
             dialect: 'postgres',
             pool: {
@@ -12,7 +12,7 @@ module.exports = {
         }
     },
     elasticSearch: {
-        address: 'localhost:9200',
+        address: 'elastic-search:9200',
         log: 'info'
     }
 };
